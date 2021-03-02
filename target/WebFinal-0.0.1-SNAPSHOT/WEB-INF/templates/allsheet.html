@@ -1,0 +1,39 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Összes Jelenléti ív</title>
+		<link rel="icon"
+		href="http://simpleicon.com/wp-content/uploads/stopwatch-1-256x256.png"
+		type="image/x-icon">
+		<a href="employeMenu">Menü</a>
+	</head>
+	<body>
+		<table>
+			<thead> 
+				<tr> 
+					<th>Év: </th>
+					<th>Hónap: </th>
+					<th>Nap</th>
+					<th>Munka kezdés </th>
+					<th>Szünet kezdete </th>
+					<th>Szünet vége </th>
+					<th>Munka vége </th>
+					<th>Ledolgozott óraszám </th>
+					<th>Nap típusa </th>				
+				</tr>
+			</thead>
+				<tr th:each="at : ${attendance}">
+					<td th:text="${at.year}"></td>
+					<td th:text="${at.month}"></td>
+					<td th:text="${at.day}"></td>
+					<td th:text="${at.started}"></td>
+					<td th:text="${at.startOfBReak}"></td>
+					<td th:text="${at.finishOfBreak}"></td>
+					<td th:text="${at.finished}"> </td>
+					<td th:text="${at.hoursOfDay}"></td>
+					<td th:text="${at.typeOfDay}"></td>	
+				</tr>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>In&Out Attendance Sheet</title>
+		<link rel="icon"
+		href="http://simpleicon.com/wp-content/uploads/stopwatch-1-256x256.png"
+		type="image/x-icon">
+		<a href="employeMenu">Menü</a>
+		
+		<style>
+		body{
+			background-color: #262626;
+			font-family: "Times New Roman";
+			color: #daa520;
+			}
+
+		table{
+			border-collapse: collapse;
+			}
+			
+		th, td{	
+			padding: 8px;
+			text-align: center;
+			}
+			
+		th{
+			color: #80b3ff;
+			text-align: center;
+			}
+			
+		tr:nth-child(even) {
+  			background-color: #333333;
+			}
+			
+		.trhidden{
+			background-color:  #262626;
+			}
+			
+		input {
+			width: 250px;
+			font-size: 16px;
+			background-color: #333333;
+			color: #00e600
+			}	
+					
+		hr{
+			color: blue;
+			}
+			
+		a{	
+			font-weight: bold;
+			font-size: 16px;
+			color: #b3ffb3;
+			}	
+		</style>
+		
+	</head>
+	
+	<body>
+	
+		<table>
+			<thead> 
+			
+			
+				<tr> 
+<!-- 				th:each="at : ${attendance}" -->
+					<th>Év: </th>
+					<td id="year" th:text="${year}"></td>
+					<th>Hónap: </th>
+					<td id="month" th:text="${month}"></td>
+				</tr>
+			
+				<tr> 
+					<th>Nap</th>
+					<th>Munka kezdés </th>
+					<th>Szünet kezdete </th>
+					<th>Szünet vége </th>
+					<th>Munka vége </th>
+					<th>Ledolgozott óraszám </th>
+					<th>Nap típusa </th>				
+				</tr>
+			</thead>
+				<tr th:each="at : ${attendance}">
+					<td th:text="${at.day}"> </td>
+					<td th:text="${at.started}"> </td>
+					<td th:text="${at.startOfBReak}"> </td>
+					<td th:text="${at.finishOfBreak}"> </td>
+					<td th:text="${at.finished}"> </td>
+					<td th:text="${at.hoursOfDay}"> </td>
+					<td th:text="${at.typeOfDay}"> </td>
+					<td>
+						<a th:href="@{'/attendance?type=AMOD&attendanceID='+${at.attendanceID} }">Módosít
+						</a>
+					</td>			
+				</tr>
+		</table>
+		
+		<br>
+		<br>
+		<hr>
+		<br>
+		
+		<form action="@{/attendance}" th:object="*{String}" method="GET" name="hours" >
+			<table>
+				<tr>
+					<th>Havi ledolgozott óraszám: </th>
+					<td th:text="${String}"> </td>
+				</tr>
+			</table>
+		</form>
+		
+		<form action="@{/newAttendance}" th:object="${attendance}" method="POST">
+			<table>
+				<tr>
+					<th>Új nap hozzáadása:</th>
+					<td colspan="2"><input type="submit" value="Hozzáadás"/></td>
+				</tr>
+			</table>
+		</form>
+		
+		<br>
+		<br>
+		<hr>
+		<br>
+		
+		<form action="@{/attendance}" th:object="${at}" method="POST">
+			<table>
+				<th> Módosítás</th>
+				<tr class="trhidden" >
+					<td> <input type="hidden" name="attendanceID"
+						th:field="*{attendanceID}" th:value="*{attendanceID}" />
+					</td>
+				</tr>
+				<tr class="trhidden" >
+					<td><input type="hidden" name="userID"
+						th:field="*{userID}" th:value="*{userID}" />
+					</td>
+				</tr>
+				<tr class="trhidden" >
+					<td><input type="hidden" name="year"
+						th:field="*{year}" th:value="*{year}" />
+					</td>
+				</tr>
+				<tr>
+					<th>Hónap</th>
+					<td><input type="text" name="month"
+						th:field="*{month}" th:value="*{month}" readonly="readonly" />
+					</td>
+				</tr>
+				<tr>
+					<th>Nap</th>
+					<td><input type="text" name="day"
+						th:field="*{day}" th:value="*{day}" readonly="readonly"/>
+					</td>
+				</tr>
+				<tr>
+					<th>Munka kezdés </th>
+					<td><input type="text" name="started"
+						th:field="*{started}" th:value="*{started}" />
+					</td> 
+				</tr>					
+				<tr>
+					<th>Szünet kezdete </th>
+					<td><input type="text" name="startOfBReak"
+						th:field="*{startOfBReak}" th:value="*{startOfBReak}" />
+					</td>
+				</tr>
+				<tr> 
+					<th>Szünet vége </th>
+					<td><input type="text" name="finishOfBreak"
+						th:field="*{finishOfBreak}" th:value="*{finishOfBreak}" />
+					</td>
+				</tr>
+				<tr>
+					<th>Munka vége </th>
+					<td><input type="text" name="finished"
+						th:field="*{finished}" th:value="*{finished}" />
+					</td>
+				</tr>
+				<tr class="trhidden">
+					<td><input type="hidden" name="hoursOfDay"
+						th:field="*{hoursOfDay}" th:value="*{hoursOfDay}" />
+					</td>
+				</tr>
+<!-- 				<tr> -->
+<!-- 					<th>Nap típusa</th> -->
+<!-- 					<td> -->
+<!-- 						<select  th:field="*{daytypes}" name="daytypes"> -->
+<!-- 							<option th:each="dt:${daytypes}" th:text="${dt.type}"> -->
+<!-- 							</option> -->
+<!-- 						</select> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
+				<tr>
+				<td colspan="2"><input type="submit" value="Módosit"/></td>
+				<tr>
+			</table>		
+		</form>	
+		
+	</body>
+	
+</html>

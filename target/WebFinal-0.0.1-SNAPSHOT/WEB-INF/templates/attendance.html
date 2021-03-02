@@ -1,0 +1,156 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>In&Out Attendance Sheet</title>
+		<link rel="stylesheet" type="text/css" href="./static/main.css" />
+		<link rel="icon"
+		href="http://simpleicon.com/wp-content/uploads/stopwatch-1-256x256.png"
+		type="image/x-icon">
+		<a href="employeMenu">Menü</a>
+	</head>
+	
+	<body>
+	
+		<table>
+			<thead> 
+				<tr  th:each="at : ${attendance}"> 
+					<th>Év: </th>
+					<td th:text="${at.year}"></td>
+					<th>Hónap: </th>
+					<td th:text="${at.month}"></td>
+				</tr>
+				<tr> 
+					<th>Nap</th>
+					<th>Munka kezdés </th>
+					<th>Szünet kezdete </th>
+					<th>Szünet vége </th>
+					<th>Munka vége </th>
+					<th>Ledolgozott óraszám </th>
+					<th>Nap típusa </th>				
+				</tr>
+			</thead>
+				<tr th:each="at : ${attendance}">
+					<td th:text="${at.day}"> </td>
+					<td th:text="${at.started}"> </td>
+					<td th:text="${at.startOfBReak}"> </td>
+					<td th:text="${at.finishOfBreak}"> </td>
+					<td th:text="${at.finished}"> </td>
+					<td th:text="${at.hoursOfDay}"> </td>
+					<td th:text="${at.typeOfDay}"> </td>
+					<td>
+						<a th:href="@{'/attendance?type=AMOD&attendanceID='+${at.attendanceID} }">Módosít
+						</a>
+					</td>			
+				</tr>
+		</table>
+		
+		<br>
+		<br>
+		<hr>
+		<br>
+		
+		<form action="@{/attendance}" th:object="*{String}" method="GET" name="hours" >
+			<table>
+				<tr>
+					<th>Havi ledolgozott óraszám: </th>
+					<td th:text="${String}"> </td>
+				</tr>
+			</table>
+		</form>
+		
+		<form action="@{/newAttendance}" th:object="*{String}" method="POST">
+			<table>
+				<tr>
+					<th>Új nap hozzáadása:</th>
+<!-- 					<td> -->
+<!-- 						<a th:href="@{'/attendance?type=NAT}">Hozzáadás -->
+<!-- 						</a> -->
+<!-- 					</td> -->
+					<td colspan="2"><input type="submit" value="Hozzáadás"/></td>
+				</tr>
+			</table>
+		</form>
+		
+		<br>
+		<br>
+		<hr>
+		<br>
+		
+		<form action="@{/attendance}" th:object="${at}" method="POST">
+			<table>
+				<tr>
+					<td> <input type="text" name="attendanceID"
+						th:field="*{attendanceID}" th:value="*{attendanceID}" />
+					</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="userID"
+						th:field="*{userID}" th:value="*{userID}" />
+					</td>
+				</tr>
+				<tr>
+					<td><input type="hidden" name="year"
+						th:field="*{year}" th:value="*{year}" />
+					</td>
+				</tr>
+				<tr>
+					<th>Hónap</th>
+					<td><input type="text" name="month"
+						th:field="*{month}" th:value="*{month}" readonly="readonly" />
+					</td>
+				</tr>
+				<tr>
+					<th>Nap</th>
+					<td><input type="text" name="day"
+						th:field="*{day}" th:value="*{day}" readonly="readonly"/>
+					</td>
+				</tr>
+				<tr>
+					<th>Munka kezdés </th>
+					<td><input type="text" name="started"
+						th:field="*{started}" th:value="*{started}" />
+					</td> 
+				</tr>					
+				<tr>
+					<th>Szünet kezdete </th>
+					<td><input type="text" name="startOfBReak"
+						th:field="*{startOfBReak}" th:value="*{startOfBReak}" />
+					</td>
+				</tr>
+				<tr> 
+					<th>Szünet vége </th>
+					<td><input type="text" name="finishOfBreak"
+						th:field="*{finishOfBreak}" th:value="*{finishOfBreak}" />
+					</td>
+				</tr>
+				<tr>
+					<th>Munka vége </th>
+					<td><input type="text" name="finished"
+						th:field="*{finished}" th:value="*{finished}" />
+					</td>
+				</tr>
+				<tr>
+					<td><input type="hidden" name="hoursOfDay"
+						th:field="*{hoursOfDay}" th:value="*{hoursOfDay}" />
+					</td>
+				</tr>
+				<tr>
+					<th>Nap típusa</th>
+					<td>
+<!-- 						<select  th:field="*{daytypes}" name="daytypes"> -->
+<!-- 							<option th:each="dt:${daytypes}" th:text="${dt.type}"> -->
+<!-- 							</option> -->
+<!-- 						</select> -->
+					</td>
+				</tr>
+				<tr>
+				<td colspan="2"><input type="submit" value="Módosit"/></td>
+				<tr>
+			</table>		
+		</form>	
+		
+	</body>
+	
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>In&Out Profile</title>
+		<link rel="icon"
+		href="http://simpleicon.com/wp-content/uploads/stopwatch-1-256x256.png"
+		type="image/x-icon">
+		<a href="employeMenu">Menü</a>
+	</head>
+	
+	<body>
+		<table>
+			<thead>
+				<tr>
+					<th>Keresztnév</th>
+					<th>Vezetéknév</th>
+					<th>Felhasználó név</th>				
+					<th>Email</th>
+					<th>Jelszó</th>
+					<th>Aktív</th>
+				</tr>
+			</thead>
+				<tr th:each="user : ${users}">
+					<td th:text="${user.firstName}"> </td>
+					<td th:text="${user.lastName}"> </td>
+					<td th:text="${user.userName}"> </td>
+					<td th:text="${user.email}"> </td>
+					<td th:text="${user.password}"> </td>
+					<td th:text="${user.active}"> </td>
+					<td>
+						<a th:href="@{'/profile?type=UMOD&userID='+${user.userID}}">Szerkesztés</a>
+					</td>
+				</tr>
+		</table>
+		
+		<br>
+		<hr>
+		<br>
+		
+		<form th:action="@{/profile}" th:object="${user}" method="POST">
+				<table>
+					<th colspan="2">Profil szerkesztése</th>
+					<tr>
+						<td><input type="text" name="userID" 
+						 th:field="*{userID}" th:value="*{userID}" /></td>
+					</tr>
+					<tr>
+						<td>FirstName:</td>
+						<td><input type="text" name="firstName"
+							placeholder="Firstname..." 
+							th:field="*{firstName}" th:value="*{firstName}" /></td>
+					</tr>
+					<tr>
+						<td>LastName:</td>
+						<td><input type="text" name="lastName"
+							placeholder="Lastname..."
+							th:field="*{lastName}" th:value="*{lastName}" /></td>
+					</tr>
+					<tr>
+						<td>User name:</td>
+						<td><input type="text" name="userName"
+							placeholder="userName..." 
+							th:field="*{userName}" th:value="*{userName}" /></td>
+					</tr>
+					<tr>
+						<td>Email:</td>
+						<td><input type="text" name="email" placeholder="Email..."
+							th:field="*{email}" th:value="*{email}" /></td>
+					</tr>
+					<tr>
+						<td>Password:</td>
+						<td><input type="password" name="password"
+							placeholder="password..."
+							th:field="*{password}" th:value="*{password}" /></td>
+					</tr>
+					<tr>
+						<td>Active:</td>
+						<td><input type="checkbox" name="active" th:checked="*{active}"
+							th:field="*{active}" th:value="*{active}" readonly="readonly"/></td>
+					</tr>
+					<tr>
+						<td><input type="submit" value="Felvétel/Módosítás" /></td>
+					</tr>
+				</table>
+			<h3 th:if="${missing_field}">Everything is require</h3>
+		</form>
+
+	</body>
+	
+</html>

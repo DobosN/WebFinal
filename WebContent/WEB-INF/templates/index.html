@@ -1,0 +1,78 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8"/>
+		<title>In&Out Login</title>
+<!-- 		<link rel="stylesheet" type="text/css" href="./static/main.css" /> -->
+		<link rel="icon"
+		href="http://simpleicon.com/wp-content/uploads/stopwatch-1-256x256.png"
+		type="image/x-icon">
+		
+		<style>
+			body{
+				background-color: #262626 /*háttér*/;
+				color: #daa520 /*szöveg */;
+				font-family: "Times New Roman";
+				font-size: 30px;
+				margin: 10px auto;
+				}
+				
+			table{
+				border-collapse: collapse;
+				margin-left: auto;
+  				margin-right: auto;
+  				margin-top: 10%;
+				}	
+			th, td{
+				/* border: 1px solid lightgreen; */
+				padding: 8px;
+				}
+			input {
+				width: 250px;
+				font-size: 22px;
+				background-color: #333333;
+				color: #00e600
+				}
+		
+			.h6{
+				margin-left: 43%;
+				}	
+		</style>
+		
+	</head>
+	
+	<body>
+	
+	<form th:action="@{/index}" method="POST">
+		<table>
+			<tr>
+				<td>User Name:</td>
+				<td>
+					<input type="text" name="userName" placeholder="username" />
+				</td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td>
+					<input type="password" name="password" placeholder="password"/>
+				</td>
+			</tr>
+			<tr>
+				<div class="submit"> 
+					<div class="center"> 
+					<td colspan="2">
+						<input type="submit" value="Login"/>
+					</td>
+					<div /> 
+				</div>
+			</tr>
+		</table>
+	</form>
+	<div class="h6">
+	<h6 th:if="${auth_error}">Wrong user name or password</h6>
+	</div>
+
+	</body>
+	
+</html>

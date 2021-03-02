@@ -1,0 +1,33 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>In&Out Menü</title>
+		<link rel="icon"
+		href="http://simpleicon.com/wp-content/uploads/stopwatch-1-256x256.png"
+		type="image/x-icon">
+	</head>
+	
+	<body>
+		<table>
+			<thead> 
+				<th> Menü </th>
+			</thead>
+			<tr th:each="user : ${users}">
+			<th>Felhasználó: </th> 
+				<td th:text="${user.userName}"></td>
+			<td>
+				<a href="logout">Logout</a>
+			</td>
+			</tr>
+			<tr>
+				<td><a href="leader">Beosztottak</a></td>
+			</tr>
+			<tr>
+				<td><a href="allemploye">Alkalmazottak</a></td>
+			</tr>
+		</table>
+	</body>
+	
+</html>

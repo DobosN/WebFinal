@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>All Employe</title>
+		<link rel="icon"
+		href="http://simpleicon.com/wp-content/uploads/stopwatch-1-256x256.png"
+		type="image/x-icon">
+		<a href=leaderMenu>Menü</a>
+		
+		<style>
+			body{
+				background-color: #262626;
+				font-family: "Times New Roman";
+				color: #daa520;
+				}
+	
+			table{
+				border-collapse: collapse;
+				}
+				
+			th, td{
+				padding: 8px;
+				text-align: center;
+				}
+				
+			th{
+				color: #80b3ff;
+				}
+				
+			tr:nth-child(even) {
+	  			background-color: #333333;
+				}
+				
+			a{	
+				font-weight: bold;
+				font-size: 16px;
+				color: #b3ffb3;
+				}
+		</style>
+		
+	</head>
+	
+	<body>
+		<table>
+			<thead>
+				<th colspan="6">Alkalmazottak</th>
+				<tr>
+					<th>Keresztnév</th>
+					<th>Vezetéknév</th>
+					<th>Felhasználó név</th>
+					<th>Email</th>
+					<th>Aktív</th>
+				</tr>
+			<thead>
+			<tbody>
+
+					<tr th:each="user : ${users}">
+						<td th:text="${user.firstName}">name</td>
+						<td th:text="${user.lastName}">name</td>
+						<td th:text="${user.userName}"></td>
+						<td th:text="${user.email}"> </td>
+						<td th:text="${user.active}">active</td>	
+				</tr>
+			</tbody>
+		</table>	
+	</body>
+	
+</html>

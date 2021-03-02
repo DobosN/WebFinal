@@ -1,0 +1,141 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>In&Out Company</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/static/main.css}" />
+		<link rel="icon"
+		href="http://simpleicon.com/wp-content/uploads/stopwatch-1-256x256.png"
+		type="image/x-icon">
+		<a href=leaderMenu>Menü</a>
+	</head>
+	
+	<body>
+		<table>
+			<thead>
+				<th colspan="6">Munkavállalók</th>
+				<tr>
+					<th>Keresztnév</th>
+					<th>Vezetéknév</th>
+					<th>Felhasználó név</th>
+					<th>Aktív</th>
+				</tr>
+			<thead>
+			<tbody>
+
+					<tr th:each="user : ${users}">
+						<td th:text="${user.firstName}">name</td>
+						<td th:text="${user.lastName}">name</td>
+						<td>
+							<a th:href="@{'/empsheet?type=List&userID='+${user.userID}}" th:text="${user.userName}">username</a>
+						</td>
+						<td th:text="${user.active}">active</td>
+						<td>
+							<a th:href="@{'/leader?type=UMOD&userID='+${user.userID}}">Módosít</a>
+						</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<br />
+		<br />
+		<hr>
+		<br />
+		
+			<form th:action="@{/leader}" th:object="${user}" method="POST">
+				<table>
+					<th colspan="2">Munkavállaló felvétele/módosítása</th>
+					<tr>
+						<td><input type="text" name="userID" 
+						 th:field="*{userID}" th:value="*{userID}" /></td>
+					</tr>
+					<tr>
+						<td>FirstName:</td>
+						<td><input type="text" name="firstName"
+							placeholder="Firstname..." 
+							th:field="*{firstName}" th:value="*{firstName}" /></td>
+					</tr>
+					<tr>
+						<td>LastName:</td>
+						<td><input type="text" name="lastName"
+							placeholder="Lastname..."
+							th:field="*{lastName}" th:value="*{lastName}" /></td>
+					</tr>
+					<tr>
+						<td>User name:</td>
+						<td><input type="text" name="userName"
+							placeholder="userName..." 
+							th:field="*{userName}" th:value="*{userName}" /></td>
+					</tr>
+					<tr>
+						<td>Email:</td>
+						<td><input type="text" name="email" placeholder="Email..."
+							th:field="*{email}" th:value="*{email}" /></td>
+					</tr>
+					<tr>
+						<td>Password:</td>
+						<td><input type="password" name="password"
+							placeholder="password..."
+							th:field="*{password}" th:value="*{password}" /></td>
+					</tr>
+					<tr>
+						<td>Active:</td>
+						<td><input type="checkbox" name="active" th:checked="*{active}"
+							th:field="*{active}" th:value="*{active}" /></td>
+					</tr>
+					<tr>
+						<td><input type="submit" value="Felvétel/Módosítás" /></td>
+					</tr>
+				</table>
+			<h3 th:if="${missing_field}">Everything is require</h3>
+		</form>
+		
+		<br />
+		<br />
+		<hr>
+		<br />
+		
+		<form th:action="@{/userToRole}" method="POST">
+				<table>
+					<th colspan="2">Alkalmazott jog kapcs.</th>
+					<tr>
+						<td>User neve:</td>
+						<td><input type="text" name="userName"
+							placeholder="userName..." /></td>
+					</tr>
+					<tr>
+						<td>Jogosultság neve:</td>
+						<td><input type="text" name="name" placeholder="name..." /></td>
+					</tr>
+					<tr>
+						<td><input type="submit" value="Jog kapcsolása." /></td>
+				</table>
+			<h3 th:if="${warrning_save_products}">Evrithing is require</h3>
+		</form>
+		
+		<br />
+		<hr>
+		<br />
+		
+		<form th:action="@{/empToLead}" method="POST">
+				<table>
+					<th colspan="2">Vezetőhöz kacsolás</th>
+					<tr>
+						<td>Alkalmazott felhasználó neve:</td>
+						<td><input type="text" name="userName"
+							placeholder="userName..." /></td>
+					</tr>
+					<tr>
+						<td>Vezető felhasználó neve:</td>
+						<td><input type="text" name="Leader_userName" placeholder="Leader_userName" /></td>
+					</tr>
+					<tr>
+						<td><input type="submit" value="Vezető/Alkalmazott Kapcs." /></td>
+				</table>
+			<h3 th:if="${warrning_save_products}">Evrithing is require</h3>
+		</form>
+		
+	</body>
+	
+</html>
